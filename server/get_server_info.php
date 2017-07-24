@@ -1,11 +1,10 @@
 <?php
-echo "XQS Server\n";
-$info = parse_ini_file("XQS.ini",true);
 $info_detail = array();
-foreach ($info as $value){
+foreach (parse_ini_file("XQS.ini",true) as $value){
     foreach ($value as $key=>$values){
         $info_detail[$key] = $values;
     }
 }
 echo "Server name:".$info_detail["host"]."\n";
-echo "Server port:".$info_detail["port"]."\r\n";
+echo "Server port:".$info_detail["port"]."\n";
+echo "Press 'Ctrl+C' or 'X' button can shut down the server.\n";
