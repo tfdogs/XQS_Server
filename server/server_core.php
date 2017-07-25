@@ -6,16 +6,12 @@ do {
         break;
     }
     //welcome  发送到客户端
-    //$msg = fseek("‪C:\Users\dell\Desktop\CPO32CI400AJ0003.jpg",1024);
-   // $msg = file_get_contents("welcome.html");
-
     //echo "read client message \n";
     $buf = socket_read($msgsock, 8192);
     echo "received message:$buf \n";
 
-    require "loadfile.php";
+    require "load_file.php";
     /*
-
     if (false === socket_write($msgsock, $talkback, strlen($talkback))) {
         echo "socket_write() failed reason:" . socket_strerror(socket_last_error($sock)) ."\n";
     } else {
