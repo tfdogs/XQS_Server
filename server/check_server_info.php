@@ -6,7 +6,9 @@ if($info_detail["index"] == null){
     die ("WARNING:Index page must be at least one.\n");
 }
 if (!file_exists($info_detail["base"])){
-    die ("WARNING:Directory ".$info_detail["base"]." is not available.\n");
+    echo ("WARNING:Directory ".$info_detail["base"]." is not available.Now server use the default directory\n");
+    $info_detail["base"] = "./web_root/";
 }
 echo "Server directory:".$info_detail["base"]."\n";
 echo "Press 'Ctrl+C' or 'X' button can shut down the server.\n";
+echo "------------------------ Server Running Status ------------------------\n";
