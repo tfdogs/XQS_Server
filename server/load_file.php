@@ -2,19 +2,29 @@
 $httphead = explode(" ",$buf);
 $filename = substr($httphead[1],1);
 $files = explode("/",$filename);
-$last =  substr($filename,-1);
 $base = "";
 foreach ($files as $values){
     $base = $base.$values;
 }
-if(file_exists($info_detail["base"]."$filename") or $last == "/"){
-    if($filename == null or $last == "/"){
+if(file_exists($info_detail["base"]."$filename") or substr($filename,-1) == "/"){
+    if($filename == null or substr($filename,-1) == "/"){
         $i = 0;
         foreach ($index_files as $value){
             if(file_exists($info_detail["base"]."$base/$value")){
-            $msg = "<!DOCTYPE html>".file_get_contents($info_detail["base"]."$base/$value");
-            $i = $i + 1;
-                echo "[200] Get success.$value \n";
+                if(strstr($value,".php")){
+                    $msg = "";
+                    exec($info_detail["php_root"]." -q ".$info_detail["base"].$filename,$out, $status);
+                    foreach ($out as $v){
+                        $msg = $msg.$v;
+                    }
+                }else{
+                    $msg = "<!DOCTYPE html>".file_get_contents($info_detail["base"]."$base/$value");
+                    }
+                $i = $i + 1;
+                }
+            echo "[200] Get success.$value \n";
+            if($i != 0){
+                break;
             }
         }
         if($i == 0){
@@ -22,9 +32,19 @@ if(file_exists($info_detail["base"]."$filename") or $last == "/"){
             echo "[403] Forbidden.$filename \n";
         }
     }else{
-        $msg = file_get_contents($info_detail["base"]."$filename");
+        if(strstr($filename,".php")){
+            $msg = "";
+            echo $info_detail["php_root"]." -q ".$info_detail["base"].$filename;
+            exec($info_detail["php_root"]." -q ".$info_detail["base"].$filename,$out, $status);
+            foreach ($out as $value){
+                $msg = $msg.$value;
+            }
+        }else{
+            $msg = file_get_contents($info_detail["base"]."$filename");
+        }
         echo "[200] Get success.$filename \n";
     }
+
 }else{
     $msg = "<!DOCTYPE html><h2>Http status 404 - Not found.</h2><hr><p>File '$filename'could not found in the server.<br>XQS Server 0.1.0";
     echo "[404] Not found.$filename \n";

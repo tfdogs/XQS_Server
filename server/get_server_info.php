@@ -7,12 +7,11 @@ foreach (parse_ini_file("XQS.ini",true) as $value){
         $info_detail[$key] = $values;
     }
 }
-
+//print_r($info_detail);
 /*Output ini info*/
-echo "Server name:".$info_detail["host"]."\n";
-echo "Server port:".$info_detail["port"]."\n";
-echo "Index pages:".$info_detail["index"]."\n";
-
+echo "Server host address is: ".$info_detail["host"]."\n";
+echo "Server port is: ".$info_detail["port"]."\n";
+echo "Index pages are: ".$info_detail["index"]."\n";
 
 /*Get index pages*/
 foreach(explode(" ",$info_detail["index"]) as $value){
