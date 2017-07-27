@@ -3,6 +3,7 @@ $httphead = explode(" ",$buf);
 $filename = substr($httphead[1],1);
 $files = explode("/",$filename);
 $base = "";
+$msg = null;
 foreach ($files as $values){
     $base = $base.$values;
 }
@@ -11,15 +12,16 @@ if(file_exists($info_detail["base"]."$filename") or substr($filename,-1) == "/")
         $i = 0;
         foreach ($index_files as $value){
             if(file_exists($info_detail["base"]."$base/$value")){
+                /*
                 if(strstr($value,".php")){
-                    $msg = "";
-                    exec($info_detail["php_root"]." -q ".$info_detail["base"].$filename,$out, $status);
+                    $msg = null;
+                    exec($info_detail["php_root"]." ".$info_detail["base"].$filename,$out, $status);
                     foreach ($out as $v){
                         $msg = $msg.$v;
                     }
-                }else{
+                }else{*/
                     $msg = "<!DOCTYPE html>".file_get_contents($info_detail["base"]."$base/$value");
-                    }
+                    //}
                 $i = $i + 1;
                 }
             echo "[200] Get success.$value \n";
@@ -32,16 +34,16 @@ if(file_exists($info_detail["base"]."$filename") or substr($filename,-1) == "/")
             echo "[403] Forbidden.$filename \n";
         }
     }else{
+        /*
         if(strstr($filename,".php")){
-            $msg = "";
-            echo $info_detail["php_root"]." -q ".$info_detail["base"].$filename;
-            exec($info_detail["php_root"]." -q ".$info_detail["base"].$filename,$out, $status);
+            $msg = "1";
+            exec($info_detail["php_root"]." ".$info_detail["base"].$filename,$out, $status);
             foreach ($out as $value){
                 $msg = $msg.$value;
             }
-        }else{
+        }else{*/
             $msg = file_get_contents($info_detail["base"]."$filename");
-        }
+       // }
         echo "[200] Get success.$filename \n";
     }
 

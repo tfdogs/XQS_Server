@@ -6,14 +6,18 @@ if($info_detail["index"] == null){
     die ("WARNING:Index page must be at least one.\n");
 }
 if (!file_exists($info_detail["base"])){
-    echo ("WARNING:Directory ".$info_detail["base"]." is not available.Now server use the default directory\n");
+    echo ("WARNING:Directory ".$info_detail["base"]." is not available.Now server use the default directory.\n");
     $info_detail["base"] = "./web_root/";
-}
-if(!file_exists($info_detail["php_root"])){
-    die ("WARNING:PHP root ".$info_detail["php_root"]." is not available.Please change it.\n");
 }
 
 echo "Server directory is: ".$info_detail["base"]."\n";
-echo "PHP root is: ".$info_detail["php_root"]."\n";
+
+if($info_detail["php_root"] == "on"){
+    if(!file_exists($info_detail["php_root"])){
+        die ("WARNING:PHP root ".$info_detail["php_root"]." is not available.Please change it or cancel PHP function.\n");
+    }else{
+        echo "PHP root is: ".$info_detail["php_root"]."\n";
+    }
+}
 echo "Tip: Press 'Ctrl+C' or 'X' button can shut down the server.\n";
 echo "------------------------ Server Running Status ------------------------\n";
