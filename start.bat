@@ -1,3 +1,4 @@
 @echo off
-D:\phpstudy\php\php-5.3.29-nts\php.exe -q server.php
+for /f "skip=1 tokens=2 delims==" %%a in (xqs.ini) do set "value=%%a"
+%value%php.exe -q server.php
 pause

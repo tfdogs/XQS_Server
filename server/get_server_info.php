@@ -9,6 +9,7 @@ foreach (parse_ini_file("XQS.ini",true) as $value){
 }
 //print_r($info_detail);
 /*Output ini info*/
+echo "PHP root is: ".$info_detail["php_root"]."\n";
 echo "Server host address is: ".$info_detail["host"]."\n";
 echo "Server port is: ".$info_detail["port"]."\n";
 echo "Index pages are: ".$info_detail["index"]."\n";
