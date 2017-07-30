@@ -5,11 +5,19 @@ if($info_detail["port"]<= 0 or $info_detail["port"]>65535){
 if($info_detail["index"] == null){
     die ("FATAL: Index pages are empty in XQS.ini it must be at least one.\n");
 }
-if (!file_exists($info_detail["base"])){
-    echo ("WARNING:Directory ".$info_detail["base"]." is not available.Now server use the default directory.\n");
-    $info_detail["base"] = "./web_root/";
+if(count($hosts) != count($ports) or count($ports) != count($dirs) or count($dirs) != count($hosts)){
+    die ("FATAL: Hosts.ports,directions are not be One-to-one correspondence.\n");
 }
 
-echo "Server directory is: ".$info_detail["base"]."\n";
+foreach ($dirs as $value) {
+    if (!file_exists($value)) {
+        die ("FATAL:Directory '$value ' is not available.\n");
+    }
+}
+
+foreach($ports as $key=>$value){
+    echo "Server listened address,directory is: ".$hosts[$key].":".$ports[$key].",".$dirs[$key]."\n";
+}
+
 echo "Tip: Press 'Ctrl+C' or 'X' button can shut down the server.\n";
 echo "------------------------ Server Running Status ------------------------\n";

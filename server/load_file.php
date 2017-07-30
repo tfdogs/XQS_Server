@@ -7,11 +7,11 @@ $msg = null;
 foreach ($files as $values){
     $base = $base.$values;
 }
-if(file_exists($info_detail["base"]."$filename") or substr($filename,-1) == "/"){
+if(file_exists($dirs[$key]."$filename") or substr($filename,-1) == "/"){
     if($filename == null or substr($filename,-1) == "/"){
         $i = 0;
         foreach ($index_files as $value){
-            if(file_exists($info_detail["base"]."$base/$value")){
+            if(file_exists($dirs[$key]."$base/$value")){
                 /*
                 if(strstr($value,".php")){
                     $msg = null;
@@ -20,11 +20,11 @@ if(file_exists($info_detail["base"]."$filename") or substr($filename,-1) == "/")
                         $msg = $msg.$v;
                     }
                 }else{*/
-                    $msg = "<!DOCTYPE html>".file_get_contents($info_detail["base"]."$base/$value");
+                    $msg = "<!DOCTYPE html>".file_get_contents($dirs[$key]."$base/$value");
                     //}
                 $i = $i + 1;
                 }
-            echo "[200] Get success.$value \n";
+            echo gettime()." [200] Get success.$value \n";
             if($i != 0){
                 break;
             }
@@ -32,7 +32,7 @@ if(file_exists($info_detail["base"]."$filename") or substr($filename,-1) == "/")
         if($i == 0){
             $msg = "<!DOCTYPE html><h2>Http status 403 - Forbidden.</h2><hr><p>Server rejected your requst for '$filename'.
                    <br>XQS Server 0.1.0 running by PHP ".PHP_VERSION;
-            echo "[403] Forbidden.$filename \n";
+            echo gettime()." [403] Forbidden.$filename \n";
         }
     }else{
         /*
@@ -43,13 +43,13 @@ if(file_exists($info_detail["base"]."$filename") or substr($filename,-1) == "/")
                 $msg = $msg.$value;
             }
         }else{*/
-            $msg = file_get_contents($info_detail["base"]."$filename");
+            $msg = file_get_contents($dirs[$key]."$filename");
        // }
-        echo "[200] Get success.$filename \n";
+        echo gettime()." [200] Get success.$filename \n";
     }
 
 }else{
     $msg = "<!DOCTYPE html><h2>Http status 404 - Not found.</h2><hr><p>File '$filename'could not found in the server.
             <br>XQS Server 0.1.0 running by PHP ".PHP_VERSION;
-    echo "[404] Not found.$filename \n";
+    echo gettime()." [404] Not found.$filename \n";
 }
